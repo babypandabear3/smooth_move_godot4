@@ -3,10 +3,13 @@ Smooth Move for Godot 4
 
 A smoothing helper node to solve jittering problem
 
+
 Installation
+
 copy smooth_move folder to project folder
 
 Usage
+
 add a new node, select Smooth_Move3D as type
 add node that movement will be smoothing as Smooth_Move3D child
 set target_path for Smooth_Move3D to follow
