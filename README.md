@@ -10,10 +10,10 @@ copy smooth_move folder to project folder
 
 Usage
 
-add a new node, select Smooth_Move3D as type
-add node that movement will be smoothing as Smooth_Move3D child
-set target_path for Smooth_Move3D to follow
-if target_path is empty, Smooth_Move3D will follow it's parent transform
+- add a new node, select Smooth_Move3D as type
+- add node that movement will be smoothing as Smooth_Move3D child
+- set target_path for Smooth_Move3D to follow
+- if target_path is empty, Smooth_Move3D will follow it's parent transform
 
 
 Common Setup
