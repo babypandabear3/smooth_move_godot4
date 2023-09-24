@@ -7,6 +7,7 @@ var target : Node2D
 var update := false
 var gt_prev :Transform2D
 var gt_current :Transform2D
+var gt_calculated :Transform2D
 var do_interpolate := false
 
 func _ready():
@@ -26,7 +27,9 @@ func update_transform():
 	
 func interpolate_transform():
 	var f = clamp(Engine.get_physics_interpolation_fraction(), 0.0, 1.0)
-	global_transform = gt_prev.interpolate_with(gt_current, f)
+	gt_calculated = gt_prev.interpolate_with(gt_current, f)
+	gt_calculated.origin = gt_calculated.origin.snapped(Vector2.ONE)
+	global_transform = gt_calculated
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
