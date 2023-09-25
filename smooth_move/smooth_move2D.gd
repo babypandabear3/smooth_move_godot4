@@ -3,6 +3,8 @@ class_name Smooth_Move2D
 extends Node2D
 
 @export var target_path : NodePath
+@export_enum("BOTH", "POSITION ONLY") var mode: int = 0
+
 var target : Node2D
 var update := false
 var gt_prev :Transform2D
@@ -26,11 +28,17 @@ func update_transform():
 	update = false
 	
 func interpolate_transform():
-	var f = clamp(Engine.get_physics_interpolation_fraction(), 0.0, 1.0)
-	gt_calculated = gt_prev.interpolate_with(gt_current, f)
-	gt_calculated.origin = gt_calculated.origin.snapped(Vector2.ONE)
-	global_transform = gt_calculated
-	
+	match mode:
+		0:
+			var f = clamp(Engine.get_physics_interpolation_fraction(), 0.0, 1.0)
+			gt_calculated = gt_prev.interpolate_with(gt_current, f)
+			gt_calculated.origin = gt_calculated.origin.snapped(Vector2.ONE)
+			global_transform = gt_calculated
+		1: 
+			var f = clamp(Engine.get_physics_interpolation_fraction(), 0.0, 1.0)
+			var position_calculated = (gt_prev.origin.lerp(gt_current.origin, f)).snapped(Vector2.ONE)
+			global_transform.origin = position_calculated
+		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	if update:
