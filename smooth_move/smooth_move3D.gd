@@ -3,6 +3,8 @@ class_name Smooth_Move3D
 extends Node3D
 
 @export var target_path : NodePath
+@export_enum("BOTH", "POSITION ONLY") var mode: int = 0
+
 var target : Node3D
 var update := false
 var gt_prev :Transform3D
@@ -25,8 +27,13 @@ func update_transform():
 	update = false
 	
 func interpolate_transform():
-	var f = clamp(Engine.get_physics_interpolation_fraction(), 0.0, 1.0)
-	global_transform = gt_prev.interpolate_with(gt_current, f)
+	if mode == 0:
+		var f = clamp(Engine.get_physics_interpolation_fraction(), 0.0, 1.0)
+		global_transform = gt_prev.interpolate_with(gt_current, f)
+	elif mode == 1:
+		var f = clamp(Engine.get_physics_interpolation_fraction(), 0.0, 1.0)
+		var calculated_origin = gt_prev.origin.lerp(gt_current.origin, f)
+		global_transform.origin = calculated_origin
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
